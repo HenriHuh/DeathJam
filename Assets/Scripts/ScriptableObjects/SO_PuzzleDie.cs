@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SO_PuzzleDie : MonoBehaviour
+[CreateAssetMenu(fileName = "PuzzleDie_Default", menuName = "ScriptableObjects/PuzzleDie")]
+public class SO_PuzzleDie : ScriptableObject
 {
     public SO_PuzzleDieSide[] sides;
 

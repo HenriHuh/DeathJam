@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "PuzzleDieSide_Default", menuName = "ScriptableObjects/PuzzleDieSide")]
 public class SO_PuzzleDieSide : ScriptableObject
 {
     [Tooltip("Which other elements can this side match with")] 

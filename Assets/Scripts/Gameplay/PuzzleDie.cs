@@ -7,16 +7,17 @@ using UnityEngine;
 /// </summary>
 public class PuzzleDie
 {
+    public GameObject GameObject { get; private set; }
     public Vector2Int Position { get; private set; }
     private int currentSideIndex;
     private SO_PuzzleDie asset;
-
-
     public SO_PuzzleDieSide CurrentSide => asset.sides[currentSideIndex];
 
-    public PuzzleDie(SO_PuzzleDie asset)
+
+    public PuzzleDie(SO_PuzzleDie asset, GameObject gameObject = null)
     {
         this.asset = asset;
+        this.GameObject = gameObject;
     }
 
     public void SetPosition(Vector2Int position)
