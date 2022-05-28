@@ -94,6 +94,12 @@ public class PuzzleController
                 }
             }
         }
+
+        if(allMatches.Count > 0)
+        {
+            MatchDelegate.Invoke(allMatches);
+        }
+
         return allMatches;
     }
 

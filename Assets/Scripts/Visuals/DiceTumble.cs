@@ -6,13 +6,25 @@ public class DiceTumble : MonoBehaviour
 {
 	// This controls the dice animator and triggers effects
 	Animator anim;
+    public Animator Anim
+    {
+        get
+        {
+			if (anim == null) anim = GetComponent<Animator>();
+			return anim;
+        }
+	}
 
 	[Header("Change this value and press enter to roll")] //Only for editor testing
 	[SerializeField][Delayed] int testDiceResult; //Only for editor testing
 	int lastTestDiceResult = 0; //Only for editor testing
-	void Start()
+
+	public bool Resting => true; // Get animator position somehow here
+
+
+    void Start()
 	{
-		anim = GetComponent<Animator>();
+
 	}
 
 	// Update is called once per frame
@@ -33,9 +45,10 @@ public class DiceTumble : MonoBehaviour
 
 	public void DiceRoll(int diceResult)
 	{
-		anim.SetTrigger("Toss");
-		anim.SetInteger("DiceResult", diceResult);
+		Anim.SetTrigger("Toss");
+		Anim.SetInteger("DiceResult", diceResult);
 		//Do other effects?
+
 	}
 }
 

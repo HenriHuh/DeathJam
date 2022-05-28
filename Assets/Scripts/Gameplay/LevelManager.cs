@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PuzzleEvents;
 
 /// <summary>
 /// Handles player inputs and manages visual behaviours
@@ -10,64 +11,11 @@ public class LevelManager : MonoBehaviour
     public GameObject diePrefab;
     public int gridSizeX;
     public int gridSizeY;
+    public LayerMask dieLayer;
 
     public PuzzleController controller { get; private set; }
 
     private List<PuzzleEvent> eventStack = new List<PuzzleEvent>();
-
-    /// <summary>
-    /// Gameplay logic will initiate a new puzzle event which are seperately processed.
-    /// </summary>
-    private interface PuzzleEvent
-    {
-        public IEnumerator EventRoutine();
-    }
-
-    private class PuzzleEvent_DieRoll : PuzzleEvent
-    {
-        private PuzzleDie puzzleDie;
-
-        public PuzzleEvent_DieRoll(PuzzleDie puzzleDie)
-        {
-            this.puzzleDie = puzzleDie;
-        }
-
-        public IEnumerator EventRoutine()
-        {
-            // Play and wait for die roll animation here
-
-            // PLACEHOLDER COLOR SWAP !!!
-            puzzleDie.GameObject.transform.position = new Vector3(puzzleDie.Position.x, 1, puzzleDie.Position.y);
-            puzzleDie.GameObject.GetComponent<Renderer>().material.color = Color.Lerp(Color.red, Color.blue, (float)puzzleDie.CurrentSide.types[0] / (float)Enums.ElementalType.COUNT);
-
-
-            yield return null;
-        }
-
-
-    }
-
-    private class PuzzleEvent_DiceMatch : PuzzleEvent
-    {
-        private List<PuzzleDie> puzzleDice;
-        public PuzzleEvent_DiceMatch(List<PuzzleDie> puzzleDice)
-        {
-            this.puzzleDice = puzzleDice;
-        }
-
-        public IEnumerator EventRoutine()
-        {
-            // Play match animations here
-
-            // PLACEHOLDER SCALE ANIMATION !!!
-            puzzleDice.ForEach((n) => n.GameObject.transform.localScale *= 2);
-            yield return new WaitForSeconds(0.5f);
-            puzzleDice.ForEach((n) => n.GameObject.transform.localScale /= 2);
-
-
-            yield return null;
-        }
-    }
 
 
     private IEnumerator Start()
@@ -102,28 +50,30 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator WaitForInput()
     {
-        // Just placeholder random roll. Insert proper input handling.
-        while (!Input.GetKeyDown(KeyCode.Mouse0))
+        while (true)
         {
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hitInfo, Mathf.Infinity, dieLayer))
+            {
+                controller.Roll(hitInfo.collider.GetComponent<PuzzleDieBehaviour>().PuzzleDie);
+                break;
+            }
+
             yield return null;
         }
-        controller.Roll(controller.dice[Random.Range(0, controller.dice.Length)]);
     }
 
     private IEnumerator WaitMatch()
     {
-        // Just placeholder random roll. Insert proper input handling.
         yield return null;
-        while (!Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            yield return null;
-        }
+
+        eventStack.Add(new PuzzleEvent_Wait(1f));
         List<PuzzleDie> dice = controller.CheckAllMatches();
-        if(dice.Count > 0)
+        while(dice.Count > 0)
         {
-            eventStack.Add(new PuzzleEvent_DiceMatch(dice));
+            controller.Roll(dice);
+            eventStack.Add(new PuzzleEvent_Wait(dice.Count * 0.1f + 0.75f));
+            dice = controller.CheckAllMatches();
         }
-        controller.Roll(dice);
     }
 
     private IEnumerator WaitEventRoutines()
@@ -159,6 +109,7 @@ public class LevelManager : MonoBehaviour
             GameObject dieObject = Instantiate(diePrefab);
             SO_PuzzleDie asset = GameManager.instance.diceAssets[Random.Range(0, GameManager.instance.diceAssets.Count)];
             dice[i] = new PuzzleDie(asset, dieObject);
+            dieObject.GetComponent<PuzzleDieBehaviour>().Init(dice[i]);
         }
         return dice;
     }

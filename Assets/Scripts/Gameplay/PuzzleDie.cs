@@ -9,9 +9,9 @@ public class PuzzleDie
 {
     public GameObject GameObject { get; private set; }
     public Vector2Int Position { get; private set; }
-    private int currentSideIndex;
+    public int CurrentSideIndex { get; private set; }
     private SO_PuzzleDie asset;
-    public SO_PuzzleDieSide CurrentSide => asset.sides[currentSideIndex];
+    public SO_PuzzleDieSide CurrentSide => asset.sides[CurrentSideIndex];
 
 
     public PuzzleDie(SO_PuzzleDie asset, GameObject gameObject = null)
@@ -27,7 +27,7 @@ public class PuzzleDie
 
     public SO_PuzzleDieSide Roll()
     {
-        currentSideIndex = Random.Range(0, asset.sides.Length);
+        CurrentSideIndex = Random.Range(0, asset.sides.Length);
         return CurrentSide;
     }
 
