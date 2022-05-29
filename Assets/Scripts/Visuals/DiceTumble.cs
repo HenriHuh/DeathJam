@@ -19,8 +19,6 @@ public class DiceTumble : MonoBehaviour
 	[SerializeField][Delayed] int testDiceResult; //Only for editor testing
 	int lastTestDiceResult = 0; //Only for editor testing
 
-	public bool Resting => true; // Get animator position somehow here
-
 
     void Start()
 	{
@@ -35,12 +33,12 @@ public class DiceTumble : MonoBehaviour
 
 	void TestDiceRoll() //Only for editor testing
 	{
-		if (lastTestDiceResult != testDiceResult && testDiceResult > 0)
-		{
-			Debug.Log("Test Rolling");
-			DiceRoll(testDiceResult);
-			lastTestDiceResult = testDiceResult;
-		}
+		//if (lastTestDiceResult != testDiceResult && testDiceResult > 0)
+		//{
+		//	Debug.Log("Test Rolling");
+		//	DiceRoll(testDiceResult);
+		//	lastTestDiceResult = testDiceResult;
+		//}
 	}
 
 	public void DiceRoll(int diceResult)

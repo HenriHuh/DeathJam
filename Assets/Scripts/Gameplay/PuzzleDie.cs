@@ -9,6 +9,7 @@ public class PuzzleDie
 {
     public GameObject GameObject { get; private set; }
     public Vector2Int Position { get; private set; }
+    public Vector3 TransformPosition => GameObject.transform.position;
     public int CurrentSideIndex { get; private set; }
     private SO_PuzzleDie asset;
     public SO_PuzzleDieSide CurrentSide => asset.sides[CurrentSideIndex];

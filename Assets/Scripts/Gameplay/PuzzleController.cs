@@ -42,8 +42,9 @@ public class PuzzleController
     {
         for (int i = 0; i < dice.Length; i++)
         {
-            RollDelegate.Invoke(dice[i]);
-            dice[i].Roll();
+            PuzzleDie die = dice[i];
+            die.Roll();
+            RollDelegate.Invoke(die);
         }
     }
 
@@ -90,7 +91,7 @@ public class PuzzleController
                 List<PuzzleDie> connected = GetConnectedDice(dice[i], dice[i].CurrentSide.types[j]);
                 if(connected.Count >= 3)
                 {
-                    AddRangeDistinct(allMatches, connected);
+                    AddRangeDistinct(ref allMatches, in connected);
                 }
             }
         }
@@ -103,7 +104,7 @@ public class PuzzleController
         return allMatches;
     }
 
-    private static void AddRangeDistinct(List<PuzzleDie> allMatches, List<PuzzleDie> connected)
+    private static void AddRangeDistinct(ref List<PuzzleDie> allMatches, in List<PuzzleDie> connected)
     {
         for (int k = 0; k < connected.Count; k++)
         {
@@ -138,6 +139,7 @@ public class PuzzleController
         List<PuzzleDie> open = new List<PuzzleDie>();
         connected.Add(die);
         open.Add(die);
+        closed.Add(die);
 
         while (open.Count > 0)
         {

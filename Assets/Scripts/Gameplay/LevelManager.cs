@@ -34,7 +34,14 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+        if(controller != null)
+        {
+            for (int k = 0; k < controller.dice.Length; k++)
+            {
+                Debug.DrawLine(controller.dice[k].TransformPosition, controller.dice[k].TransformPosition + Vector3.up * 2, Tools.ColorRainbowLerp(controller.dice[k].CurrentSideIndex / 6f));
 
+            }
+        }
     }
 
     private IEnumerator MainRoutine()

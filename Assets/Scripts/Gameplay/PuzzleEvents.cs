@@ -15,10 +15,12 @@ namespace PuzzleEvents
     public class PuzzleEvent_DieRoll : PuzzleEvent
     {
         private PuzzleDie puzzleDie;
+        private int dieSideIndex;
 
         public PuzzleEvent_DieRoll(PuzzleDie puzzleDie)
         {
             this.puzzleDie = puzzleDie;
+            dieSideIndex = puzzleDie.CurrentSideIndex;
         }
 
         public IEnumerator EventRoutine()
@@ -29,7 +31,7 @@ namespace PuzzleEvents
             // Do Tumble
             puzzleDie.GameObject.transform.position = new Vector3(puzzleDie.Position.x, 1, puzzleDie.Position.y) - Vector3.one * 1.5f + Vector3.up * 1.5f;
             DiceTumble tumble = puzzleDie.GameObject.GetComponentInChildren<DiceTumble>();
-            tumble.DiceRoll(puzzleDie.CurrentSideIndex);
+            tumble.DiceRoll(dieSideIndex + 1);
 
             float t = 0;
             while (t < 0.1f)
