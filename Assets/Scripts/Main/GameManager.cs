@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public List<SO_PuzzleDie> diceAssets;
 
     public static GameManager instance;
+    public float diceScaleFactor;
 
     void Awake()
     {

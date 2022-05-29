@@ -29,7 +29,9 @@ namespace PuzzleEvents
             puzzleDie.GameObject.SetActive(true);
 
             // Do Tumble
-            puzzleDie.GameObject.transform.position = new Vector3(puzzleDie.Position.x, 1, puzzleDie.Position.y) - Vector3.one * 1.5f + Vector3.up * 1.5f;
+            puzzleDie.GameObject.transform.position = GameManager.instance.transform.position +
+                new Vector3(puzzleDie.Position.x * GameManager.instance.diceScaleFactor, 0, puzzleDie.Position.y * GameManager.instance.diceScaleFactor)
+                - Vector3.one * GameManager.instance.diceScaleFactor * 1.5f + Vector3.up * GameManager.instance.diceScaleFactor * 1.5f;
             DiceTumble tumble = puzzleDie.GameObject.GetComponentInChildren<DiceTumble>();
             tumble.DiceRoll(dieSideIndex + 1);
 
