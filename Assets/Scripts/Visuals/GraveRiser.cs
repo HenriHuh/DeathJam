@@ -8,7 +8,7 @@ public class GraveRiser : MonoBehaviour
 	[SerializeField] ParticleSystem graveParticles;
 	[SerializeField] Animator skeleboiAnim;
 
-	public void triggerGrave()
+	public void TriggerGrave()
 	{
 		graveParticles.Play();
 		skeleboiAnim.SetTrigger("Rise");

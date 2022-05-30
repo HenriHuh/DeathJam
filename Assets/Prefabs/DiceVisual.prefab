@@ -467,7 +467,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37281a21efe509448a8049698006283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testDiceResult: 0
+  scoreParticleRed: {fileID: 0}
+  scoreParticleBlue: {fileID: 0}
+  scoreParticleGreen: {fileID: 0}
+  scoreParticleYellow: {fileID: 0}
+  scoreParticleMixed: {fileID: 0}
+  testDiceResult: 1
 --- !u!1 &3186668590314224448
 GameObject:
   m_ObjectHideFlags: 0
