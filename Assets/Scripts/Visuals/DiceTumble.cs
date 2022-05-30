@@ -5,6 +5,7 @@ using UnityEngine;
 public class DiceTumble : MonoBehaviour
 {
 	// This controls the dice animator and triggers effects
+	[SerializeField] ParticleSystem scoreParticleRed, scoreParticleBlue, scoreParticleGreen, scoreParticleYellow, scoreParticleMixed;
 	Animator anim;
 	public Animator Anim
 	{
@@ -18,29 +19,6 @@ public class DiceTumble : MonoBehaviour
 	[Header("Change this value and press enter to roll")] //Only for editor testing
 	[SerializeField][Delayed] int testDiceResult; //Only for editor testing
 	int lastTestDiceResult = 0; //Only for editor testing
-
-
-	void Start()
-	{
-
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-		TestDiceRoll(); //Only for editor testing
-	}
-
-	void TestDiceRoll() //Only for editor testing
-	{
-		//if (lastTestDiceResult != testDiceResult && testDiceResult > 0)
-		//{
-		//	Debug.Log("Test Rolling");
-		//	DiceRoll(testDiceResult);
-		//	lastTestDiceResult = testDiceResult;
-		//}
-	}
-
 	public void DiceRoll(int diceResult)
 	{
 		Anim.SetTrigger("Toss");
@@ -48,10 +26,30 @@ public class DiceTumble : MonoBehaviour
 		//Do other effects?
 
 	}
-	public void DiceScore()
+	public void DiceScore(int diceResult)
 	{
 		Anim.SetTrigger("Jolt");
-		//Play particle effects based on score type
+		switch (diceResult)
+		{
+			case 0:  //earth fire earthfire water waterwind wind
+				scoreParticleGreen.Play();
+				break;
+			case 1:
+				scoreParticleRed.Play();
+				break;
+			case 2:
+				scoreParticleMixed.Play();
+				break;
+			case 3:
+				scoreParticleBlue.Play();
+				break;
+			case 4:
+				scoreParticleMixed.Play();
+				break;
+			case 5:
+				scoreParticleYellow.Play();
+				break;
+		}
 
 	}
 }
