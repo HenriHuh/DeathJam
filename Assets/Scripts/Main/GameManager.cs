@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<SO_PuzzleDie> diceAssets;
+    public GameObject board;
 
     public static GameManager instance;
     public float diceScaleFactor;
@@ -20,11 +21,6 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    void StartLevel( /*Insert level asset here*/)
-    {
-
     }
 
 }

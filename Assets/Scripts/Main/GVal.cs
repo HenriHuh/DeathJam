@@ -26,10 +26,10 @@ namespace Enums
     public enum ElementalType
     {
         None,
-        Fire,
-        Water,
-        Earth,
-        Wind,
+        Heart,
+        Soul,
+        Mind,
+        Weird,
 
         COUNT
     }

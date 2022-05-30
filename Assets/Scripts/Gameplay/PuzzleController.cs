@@ -19,6 +19,7 @@ public class PuzzleController
     public Delegate_Match MatchDelegate { get; set; }
     public Delegate_Roll RollDelegate { get; set; }
 
+    private const int CONNECTIONS_REQUIRED_FOR_POINTS = 4;
 
     public PuzzleController(int gridSizeX, int gridSizeY, PuzzleDie[] dice)
     {
@@ -89,7 +90,7 @@ public class PuzzleController
             for (int j = 0; j < dice[i].CurrentSide.types.Count; j++)
             {
                 List<PuzzleDie> connected = GetConnectedDice(dice[i], dice[i].CurrentSide.types[j]);
-                if(connected.Count >= 3)
+                if(connected.Count >= CONNECTIONS_REQUIRED_FOR_POINTS)
                 {
                     AddRangeDistinct(ref allMatches, in connected);
                 }
