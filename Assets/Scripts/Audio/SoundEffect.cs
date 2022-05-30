@@ -29,4 +29,11 @@ public class SoundEffect : MonoBehaviour
 		audioSource.Play();
 	}
 
+	public void PlayPitchlessSFX(int i)
+	{
+		audioSource.clip = audioClips[i];
+		audioSource.pitch = 1f;
+		audioSource.Play();
+	}
+
 }
