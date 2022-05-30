@@ -12,11 +12,31 @@ public class LevelManager : MonoBehaviour
     public int gridSizeX;
     public int gridSizeY;
     public LayerMask dieLayer;
+    public LayerMask levelLayer;
+    public Transform graveVirtualCameraTarget;
+    public Cinemachine.CinemachineVirtualCamera camera_LevelSelect;
+    public Cinemachine.CinemachineVirtualCamera camera_Level;
+    public Cinemachine.CinemachineVirtualCamera camera_Menu;
 
     public PuzzleController controller { get; private set; }
 
     private List<PuzzleEvent> eventStack = new List<PuzzleEvent>();
+    public Level level { get; private set; }
+    private bool lost = false;
+    private bool won = false;
 
+    public static LevelManager instance;
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Debug.LogError("Multiple level manager instances.");
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
 
     private IEnumerator Start()
     {
@@ -25,20 +45,36 @@ public class LevelManager : MonoBehaviour
         // GameManager should be active when LevelManager is instantiated anyway
         yield return new WaitForEndOfFrame();
 
-        controller = new PuzzleController(gridSizeX, gridSizeY, CreateDice(4*4));
+        controller = new PuzzleController(gridSizeX, gridSizeY, CreateDice(4 * 4));
         controller.MatchDelegate += AddMatchRoutine;
         controller.RollDelegate += AddRollRoutine;
         controller.RollAll();
+        SetCamera(camera_Menu);
+    }
+
+
+    public void StartGame()
+    {
+        SetCamera(camera_LevelSelect);
         StartCoroutine(MainRoutine());
+    }
+
+    private void SetCamera(Cinemachine.CinemachineVirtualCamera camera)
+    {
+        camera_LevelSelect.enabled = false;
+        camera_Level.enabled = false;
+        camera_Menu.enabled = false;
+
+        camera.enabled = true;
     }
 
     private void Update()
     {
-        if(controller != null)
+        if(controller != null && Application.isEditor)
         {
             for (int k = 0; k < controller.dice.Length; k++)
             {
-                Debug.DrawLine(controller.dice[k].TransformPosition, controller.dice[k].TransformPosition + Vector3.up * 2, Tools.ColorRainbowLerp(controller.dice[k].CurrentSideIndex / 6f));
+                Debug.DrawLine(controller.dice[k].TransformPosition, controller.dice[k].TransformPosition + Vector3.up, Tools.ColorRainbowLerp(controller.dice[k].CurrentSideIndex / 6f));
 
             }
         }
@@ -48,10 +84,55 @@ public class LevelManager : MonoBehaviour
     {
         while (true)
         {
+            SetCamera(camera_LevelSelect);
+            yield return LevelSelectRoutine();
+            SetCamera(camera_Level);
+            GameManager.instance.board.SetActive(true);
+            yield return LevelRoutine();
+        }
+    }
+
+    private IEnumerator LevelSelectRoutine()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hitInfo, Mathf.Infinity, levelLayer))
+            {
+                level = hitInfo.collider.GetComponentInChildren<Level>();
+                if (!level.Finished)
+                {
+                    level.enabled = true;
+                    graveVirtualCameraTarget.transform.position = level.transform.position;
+                    controller.RollAll();
+
+                    break;
+                }
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator LevelRoutine()
+    {
+        lost = false;
+        won = false;
+
+        while (true)
+        {
             yield return WaitEventRoutines();
+            if (won || lost)
+            {
+                level.EndLevel();
+                break;
+            }
             yield return WaitForInput();
             yield return WaitEventRoutines();
             yield return WaitMatch();
+            if (won || lost)
+            {
+                level.EndLevel();
+                break;
+            }
         }
     }
 
@@ -62,6 +143,7 @@ public class LevelManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hitInfo, Mathf.Infinity, dieLayer))
             {
                 controller.Roll(hitInfo.collider.GetComponent<PuzzleDieBehaviour>().PuzzleDie);
+                lost = level.UseMove();
                 break;
             }
 
@@ -80,6 +162,7 @@ public class LevelManager : MonoBehaviour
             controller.Roll(dice);
             eventStack.Add(new PuzzleEvent_Wait(dice.Count * 0.1f + 0.75f));
             dice = controller.CheckAllMatches();
+
         }
     }
 
@@ -88,6 +171,13 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < eventStack.Count; i++)
         {
             yield return eventStack[i].EventRoutine();
+            won = level.CheckRequirements(true);
+            if (won)
+            {
+                // Wait for cool animation and break;
+                yield return new WaitForSeconds(6.5f);
+                break;
+            }
         }
         eventStack.Clear();
     }
@@ -113,7 +203,7 @@ public class LevelManager : MonoBehaviour
         PuzzleDie[] dice = new PuzzleDie[count];
         for (int i = 0; i < count; i++)
         {
-            GameObject dieObject = Instantiate(diePrefab);
+            GameObject dieObject = Instantiate(diePrefab, GameManager.instance.board.transform);
             SO_PuzzleDie asset = GameManager.instance.diceAssets[Random.Range(0, GameManager.instance.diceAssets.Count)];
             dice[i] = new PuzzleDie(asset, dieObject);
             dieObject.GetComponent<PuzzleDieBehaviour>().Init(dice[i]);

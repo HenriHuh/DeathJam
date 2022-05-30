@@ -35,15 +35,7 @@ namespace PuzzleEvents
             DiceTumble tumble = puzzleDie.GameObject.GetComponentInChildren<DiceTumble>();
             tumble.DiceRoll(dieSideIndex + 1);
 
-            float t = 0;
-            while (t < 0.1f)
-            {
-                t += Time.deltaTime;
-                yield return null;
-            }
-
-
-            yield return null;
+            yield return new WaitForSeconds(0.05f);
         }
 
 
@@ -51,10 +43,14 @@ namespace PuzzleEvents
 
     public class PuzzleEvent_DiceMatch : PuzzleEvent
     {
-        private List<PuzzleDie> puzzleDice;
+        private List<(PuzzleDie, int)> puzzleDice;
         public PuzzleEvent_DiceMatch(List<PuzzleDie> puzzleDice)
         {
-            this.puzzleDice = puzzleDice;
+            this.puzzleDice = new List<(PuzzleDie, int)>();
+            for (int i = 0; i < puzzleDice.Count; i++)
+            {
+                this.puzzleDice.Add((puzzleDice[i], puzzleDice[i].CurrentSideIndex));
+            }
         }
 
         public IEnumerator EventRoutine()
@@ -62,9 +58,37 @@ namespace PuzzleEvents
             // Play match animations here
 
             // PLACEHOLDER SCALE ANIMATION !!!
-            puzzleDice.ForEach((n) => n.GameObject.transform.localScale *= 2);
-            yield return new WaitForSeconds(0.5f);
-            puzzleDice.ForEach((n) => n.GameObject.transform.localScale /= 2);
+            for (int i = 0; i < puzzleDice.Count; i++)
+            {
+                switch (puzzleDice[i].Item2)
+                {
+                    case 0:
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Mind);
+                        break;
+                    case 1:
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Heart);
+                        break;
+                    case 2:
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Mind);
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Heart);
+                        break;
+                    case 3:
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Soul);
+                        break;
+                    case 4:
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Soul);
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Weird);
+                        break;
+                    case 5:
+                        LevelManager.instance.level.AddType(Enums.ElementalType.Weird);
+                        break;
+                    default:
+                        Debug.LogError("Invalid index: " + puzzleDice[i].Item2);
+                        break;
+                }
+            }
+            puzzleDice.ForEach((n) => n.Item1.GameObject.GetComponentInChildren<DiceTumble>().DiceScore(n.Item2));
+            yield return new WaitForSeconds(1f);
 
 
             yield return null;
@@ -84,5 +108,6 @@ namespace PuzzleEvents
             yield return new WaitForSeconds(time);
         }
     }
+
 }
 

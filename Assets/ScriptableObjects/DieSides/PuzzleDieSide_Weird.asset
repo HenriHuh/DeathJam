@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15f9df908354d2e44adf9c45f52bb3c6, type: 3}
-  m_Name: PuzzleDieSide_Fire
+  m_Name: PuzzleDieSide_Weird
   m_EditorClassIdentifier: 
-  types: 01000000
+  types: 04000000
   image: {fileID: 0}
