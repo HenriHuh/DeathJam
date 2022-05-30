@@ -1357,19 +1357,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[0].count
-      value: 50
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[1].count
-      value: 55
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[2].count
-      value: 60
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[3].count
-      value: 55
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8902666339394112257, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: m_Name
@@ -1882,11 +1882,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[0].count
-      value: 40
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[1].count
-      value: 45
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[2].count
@@ -2108,11 +2108,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[1].count
-      value: 65
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[2].count
-      value: 65
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[3].count
@@ -2239,11 +2239,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[0].count
-      value: 40
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[1].count
-      value: 45
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[2].count
@@ -2473,7 +2473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[0].count
-      value: 40
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[1].count
@@ -2481,7 +2481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8796087663559480063, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: requirements.Array.data[2].count
-      value: 45
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8902666339394112257, guid: a0ea3bd3ee73cb848b8b57bb19999a37, type: 3}
       propertyPath: m_Name
