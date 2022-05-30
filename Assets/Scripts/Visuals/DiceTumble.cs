@@ -6,13 +6,13 @@ public class DiceTumble : MonoBehaviour
 {
 	// This controls the dice animator and triggers effects
 	Animator anim;
-    public Animator Anim
-    {
-        get
-        {
+	public Animator Anim
+	{
+		get
+		{
 			if (anim == null) anim = GetComponent<Animator>();
 			return anim;
-        }
+		}
 	}
 
 	[Header("Change this value and press enter to roll")] //Only for editor testing
@@ -20,7 +20,7 @@ public class DiceTumble : MonoBehaviour
 	int lastTestDiceResult = 0; //Only for editor testing
 
 
-    void Start()
+	void Start()
 	{
 
 	}
@@ -46,6 +46,12 @@ public class DiceTumble : MonoBehaviour
 		Anim.SetTrigger("Toss");
 		Anim.SetInteger("DiceResult", diceResult);
 		//Do other effects?
+
+	}
+	public void DiceScore()
+	{
+		Anim.SetTrigger("Jolt");
+		//Play particle effects based on score type
 
 	}
 }
