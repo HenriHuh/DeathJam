@@ -18,4 +18,9 @@ public class GraveRiser : MonoBehaviour
 			audioSource.Play();
 		}
 	}
+
+	public void TriggerDance()
+    {
+		skeleboiAnim.SetBool("Dancing", true);
+    }
 }
