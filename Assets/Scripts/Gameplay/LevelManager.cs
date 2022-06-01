@@ -24,6 +24,7 @@ public class LevelManager : MonoBehaviour
     public Level level { get; private set; }
     private bool lost = false;
     private bool won = false;
+    private int levelsCompleted;
 
     public static LevelManager instance;
 
@@ -99,10 +100,11 @@ public class LevelManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hitInfo, Mathf.Infinity, levelLayer))
             {
                 level = hitInfo.collider.GetComponentInChildren<Level>();
-                if (!level.Finished)
+                if (!level.CheckRequirements())
                 {
                     level.enabled = true;
                     graveVirtualCameraTarget.transform.position = level.transform.position;
+                    level.UpdateUI();
                     controller.RollAll();
 
                     break;
@@ -128,6 +130,7 @@ public class LevelManager : MonoBehaviour
             yield return WaitForInput();
             yield return WaitEventRoutines();
             yield return WaitMatch();
+            yield return WaitEventRoutines();
             if (won || lost)
             {
                 level.EndLevel();
@@ -175,6 +178,11 @@ public class LevelManager : MonoBehaviour
             if (won)
             {
                 // Wait for cool animation and break;
+                levelsCompleted++;
+                if(levelsCompleted >= 6)
+                {
+                    GameManager.instance.victoryDisco.SetActive(true);
+                }
                 yield return new WaitForSeconds(6.5f);
                 break;
             }
