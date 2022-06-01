@@ -179,11 +179,16 @@ public class LevelManager : MonoBehaviour
             {
                 // Wait for cool animation and break;
                 levelsCompleted++;
-                if(levelsCompleted >= 6)
+                yield return new WaitForSeconds(6.5f);
+                if (levelsCompleted >= 6)
                 {
                     GameManager.instance.victoryDisco.SetActive(true);
+                    Object[] objects = FindObjectsOfType<GraveRiser>();
+                    for (int j = 0; j < objects.Length; j++)
+                    {
+                        (objects[j] as GraveRiser).GetComponent<GraveRiser>().TriggerDance();
+                    }
                 }
-                yield return new WaitForSeconds(6.5f);
                 break;
             }
         }
