@@ -28,7 +28,10 @@ public class PuzzleDie
 
     public SO_PuzzleDieSide Roll()
     {
-        CurrentSideIndex = Random.Range(0, asset.sides.Length);
+        int nextSideIndex = Random.Range(0, asset.sides.Length - 1);
+        // Prevent die from landing on the same side on wich it started from
+        CurrentSideIndex = nextSideIndex + (nextSideIndex >= CurrentSideIndex ? 1 : 0);
+
         return CurrentSide;
     }
 

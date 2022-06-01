@@ -19,7 +19,7 @@ public class PuzzleController
     public Delegate_Match MatchDelegate { get; set; }
     public Delegate_Roll RollDelegate { get; set; }
 
-    private const int CONNECTIONS_REQUIRED_FOR_POINTS = 4;
+    private const int CONNECTIONS_REQUIRED_FOR_POINTS = 5;
 
     public PuzzleController(int gridSizeX, int gridSizeY, PuzzleDie[] dice)
     {
