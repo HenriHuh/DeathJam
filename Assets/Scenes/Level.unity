@@ -1248,10 +1248,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b4759da05a798e8488b8d6d9f104213d, type: 2}
   board: {fileID: 1263730608}
   victoryDisco: {fileID: 1418966182}
-  sprite_ElementMind: {fileID: 21300000, guid: 8b897ba31c7ca4744a9de1d0f3fcea78, type: 3}
-  sprite_ElementSoul: {fileID: 21300000, guid: 3cc259950b636b54895b534db841c990, type: 3}
-  sprite_ElementHeart: {fileID: 21300000, guid: 968e8f7688d1df74ca8e7800582d8a5b, type: 3}
-  sprite_ElementWeird: {fileID: 21300000, guid: fadb490debba7b14bb92f84045bc5d27, type: 3}
+  sprite_ElementMind: {fileID: 21300000, guid: 4b2a8d60b2ad9344e85b71b436bb5b69, type: 3}
+  sprite_ElementSoul: {fileID: 21300000, guid: bc8a368f024e49a4d93871a7d55b8495, type: 3}
+  sprite_ElementHeart: {fileID: 21300000, guid: 5facb66e86deece409b345446ffba7ab, type: 3}
+  sprite_ElementWeird: {fileID: 21300000, guid: ce52f20cbba6385479f80a49f033172b, type: 3}
   diceScaleFactor: 0.2
 --- !u!4 &696235308
 Transform:
